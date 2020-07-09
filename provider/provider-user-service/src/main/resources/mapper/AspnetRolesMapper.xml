@@ -43,4 +43,14 @@
         #{item}
       </foreach>
   </select>
+    <select id="selectByUserId" resultMap="BaseResultMap">
+      SELECT
+      Roles_Auto,RoleName
+      FROM
+      aspnet_Roles AS ar
+      INNER JOIN aspnet_UsersInRoles AS au ON au.RoleId = ar.RoleId
+      WHERE
+      1 = 1
+      AND au.UserId = #{param}
+    </select>
 </mapper>

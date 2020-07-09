@@ -10,9 +10,12 @@ import com.funtl.myshop.plus.commons.dto.ResponseResult;
 import com.funtl.myshop.plus.commons.utils.MapperUtils;
 import com.funtl.myshop.plus.commons.utils.OkHttpClientUtil;
 import com.funtl.myshop.plus.provider.api.AspnetMembershipService;
+import com.funtl.myshop.plus.provider.api.AspnetRolesService;
 import com.funtl.myshop.plus.provider.api.AspnetUsersService;
 import com.funtl.myshop.plus.provider.domain.AspnetMembership;
+import com.funtl.myshop.plus.provider.domain.AspnetRoles;
 import com.funtl.myshop.plus.provider.domain.AspnetUsers;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiOperation;
 import okhttp3.Response;
@@ -30,6 +33,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 /**
@@ -66,6 +70,9 @@ public class LoginController {
 
     @Reference(version = "1.0.0")
     private AspnetMembershipService aspnetMembershipService;
+
+    @Reference(version = "1.0.0")
+    private AspnetRolesService aspnetRolesService;
 
     /**
      * 登录
@@ -124,11 +131,20 @@ public class LoginController {
         if(aspnetUsers == null){
             return MapperUtils.json2pojo(jsonString, ResponseResult.class);
         }
+        AspnetUsers au = aspnetUsersService.selectById(aspnetUsers.getUserAuto());
+
+        //获取角色
+        List<AspnetRoles> list = aspnetRolesService.selectByUserId(au.getUserId());
+        List<Long> ids = Lists.newArrayList();
+        for(AspnetRoles aspnetRoles : list){
+            ids.add(aspnetRoles.getRolesAuto());
+        }
 
         // 封装并返回结果
         LoginInfo loginInfo = new LoginInfo();
         loginInfo.setName(aspnetUsers.getUsername());
         loginInfo.setUserAuto(aspnetUsers.getUserAuto());
+        loginInfo.setRoleAutos(ids);
         return new ResponseResult<LoginInfo>(ResponseResult.CodeStatus.OK, "获取用户信息", loginInfo);
     }
 

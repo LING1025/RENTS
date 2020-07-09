@@ -11,4 +11,7 @@ public interface AspnetRolesMapper extends MyMapper<AspnetRoles> {
     List<RolesNameList> selectRoleName(@Param("roleName") String roleName);
 
     List<RolesNameList> selectByRolesId(@Param("param") List<Long> roleIds);
+
+    List<AspnetRoles> selectByUserId(@Param("param") Object userId);
+
 }
