@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -113,5 +115,4 @@ public class TableController {
         yearMonthList.setLastMonth(lastMonth);
         return new ResponseResult<>(ResponseResult.CodeStatus.OK,"查询成功",yearMonthList);
     }
-
 }

@@ -13,7 +13,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.168.93:8848
+        server-addr: 192.168.168.208:8848
 #
 #dubbo:
 #  scan:
@@ -30,7 +30,7 @@ dubbo:
   scan:
     base-packages: com.funtl.myshop.plus.business.controller, com.funtl.myshop.plus.business.service
   registry:
-    address: nacos://192.168.168.93
+    address: nacos://192.168.168.208
     check: false
     port: 8848
   protocol:
@@ -38,7 +38,7 @@ dubbo:
     port: -1
     serialization: kryo
   provider:
-    timeout: 2500
+    timeout: 5000
 
 # 开启 Feign 的 OKHttp 方式
 feign:
@@ -50,6 +50,7 @@ feign:
 server:
   port: 9001
 
+# 刷新配置，在spring boot 2.x 之前1.x的management.security.enabled失效，新的配置为
 management:
   endpoints:
     web:
