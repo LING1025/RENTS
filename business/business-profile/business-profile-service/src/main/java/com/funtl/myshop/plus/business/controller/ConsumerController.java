@@ -78,14 +78,17 @@ public class ConsumerController {
         }
     }*/
 
-    @ApiOperation(value = "修改密码")
+    @ApiOperation(value = "修改个人密码")
     @PostMapping(value = "modify/password")
     public ResponseResult<Void> modifyPassword(@RequestBody PasswordParam passwordParam) {
         AspnetUsers aspnetUsers = aspnetUsersService.get(passwordParam.getUsername());
+        if(aspnetUsers == null){
+            return new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"用户不存在",null);
+        }
         AspnetMembership aspnetMembership = aspnetMembershipService.selectByUserId(aspnetUsers.getUserId());
 
         // 旧密码正确
-        if (passwordEncoder.matches(passwordParam.getOldPassword(), aspnetMembership.getPassword())) {
+        if (passwordEncoder.matches(passwordParam.getOldPassword(), aspnetMembership.getPasswordCode())) {
             Integer result = aspnetMembershipService.modifyPassword(aspnetUsers.getUsername(), passwordParam.getNewPassword());
             if (result > 0) {
                 return new ResponseResult<Void>(ResponseResult.CodeStatus.OK, "修改密码成功");
@@ -152,7 +155,7 @@ public class ConsumerController {
             return new ResponseResult<>(ResponseResult.CodeStatus.FAIL, "用户不存在", null);
         }
         AspnetMembership aspnetMembership = aspnetMembershipService.selectByUserId(aspnetUsers.getUserId());
-        aspnetMembership.setPassword(passwordEncoder.encode("123456"));
+        aspnetMembership.setPasswordCode(passwordEncoder.encode("123456"));
         Integer i = aspnetMembershipService.update(aspnetMembership);
         if(i == 0){
             return new ResponseResult<>(ResponseResult.CodeStatus.FAIL, "重置密码失败", null);

@@ -50,7 +50,7 @@ public class AspnetMembershipServiceImpl implements AspnetMembershipService{
     public Integer modifyPassword(String username, String password) {
         AspnetUsers aspnetUsers = aspnetUsersService.get(username);
         AspnetMembership aspnetMembership = selectByUserId(aspnetUsers.getUserId());
-        aspnetMembership.setPassword(passwordEncoder.encode(password));
+        aspnetMembership.setPasswordCode(passwordEncoder.encode(password));
         aspnetMembership.setLastPasswordChangedDate(new Date());
         aspnetMembership.setComment("备注");
         return aspnetMembershipMapper.updateByPrimaryKey(aspnetMembership);
