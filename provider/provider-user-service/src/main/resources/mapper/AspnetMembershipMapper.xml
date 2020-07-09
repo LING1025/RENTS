@@ -7,6 +7,7 @@
     <id column="UserId" jdbcType="OTHER" property="userId" />
     <result column="ApplicationId" jdbcType="OTHER" property="applicationId" />
     <result column="Password" jdbcType="VARCHAR" property="password" />
+    <result column="PasswordCode" jdbcType="VARCHAR" property="passwordCode" />
     <result column="PasswordFormat" jdbcType="INTEGER" property="passwordFormat" />
     <result column="PasswordSalt" jdbcType="VARCHAR" property="passwordSalt" />
     <result column="MobilePIN" jdbcType="VARCHAR" property="mobilePIN" />
@@ -28,7 +29,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    UserId, ApplicationId, [Password], PasswordFormat, PasswordSalt, MobilePIN, Email,
+    UserId, ApplicationId, [Password],PasswordCode, PasswordFormat, PasswordSalt, MobilePIN, Email,
     LoweredEmail, PasswordQuestion, PasswordAnswer, IsApproved, IsLockedOut, CreateDate,
     LastLoginDate, LastPasswordChangedDate, LastLockoutDate, FailedPasswordAttemptCount,
     FailedPasswordAttemptWindowStart, FailedPasswordAnswerAttemptCount, FailedPasswordAnswerAttemptWindowStart,

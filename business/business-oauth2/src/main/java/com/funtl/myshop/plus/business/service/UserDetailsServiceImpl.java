@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         grantedAuthorities.add(grantedAuthority);
         // 用户存在
         if (aspnetUsers != null) {
-            return new User(aspnetUsers.getUsername(), aspnetMembership.getPassword(), grantedAuthorities);
+            return new User(aspnetUsers.getUsername(), aspnetMembership.getPasswordCode(), grantedAuthorities);
         }
 
         // 用户不存在

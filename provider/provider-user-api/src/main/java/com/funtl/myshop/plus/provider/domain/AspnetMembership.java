@@ -30,6 +30,9 @@ public class AspnetMembership implements Serializable {
     @Column(name = "Password")
     private String password;
 
+    @Column(name = "PasswordCode")
+    private String passwordCode;
+
     @Column(name = "PasswordFormat")
     private Integer passwordFormat;
 

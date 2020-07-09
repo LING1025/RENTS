@@ -171,7 +171,7 @@ public class LoginController {
             return new ResponseResult<Void>(ResponseResult.CodeStatus.FAIL, "用户不存在");
         }
         AspnetMembership aspnetMembership = aspnetMembershipService.selectByUserId(aspnetUsers.getUserId());
-        aspnetMembership.setPassword(passwordEncoder.encode(passwordParam.getNewPassword()));
+        aspnetMembership.setPasswordCode(passwordEncoder.encode(passwordParam.getNewPassword()));
         aspnetMembership.setLastPasswordChangedDate(new Date());
         Integer i = aspnetMembershipService.update(aspnetMembership);
         if(i == 0){
