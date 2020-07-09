@@ -130,7 +130,7 @@ public class EmpBaseController {
         aspnetMembership.setApplicationId("73663109-DDA2-4C2D-8311-337946B5C373");
         aspnetMembership.setUserId(a.getUserId());
 //        aspnetMembership.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-        aspnetMembership.setPassword(passwordEncoder.encode("123456"));
+        aspnetMembership.setPasswordCode(passwordEncoder.encode("123456"));
         aspnetMembership.setPasswordSalt("/QJI/OYzoWZAiclktXY/sA==");
         aspnetMembership.setPasswordFormat(1);
         aspnetMembership.setLoweredEmail(empParamDto.getEmail().toLowerCase());
