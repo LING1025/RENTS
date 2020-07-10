@@ -32,6 +32,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         //查询用户
         AspnetUsers aspnetUsers = aspnetUsersService.get(s);
+        if(aspnetUsers == null){
+            return null;
+        }
 
         //查询用户密码
         AspnetMembership aspnetMembership = aspnetMembershipService.selectByUserId(aspnetUsers.getUserId());
