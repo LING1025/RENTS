@@ -31,7 +31,7 @@ public class AspnetUsersServiceImpl implements AspnetUsersService {
     @Override
     public AspnetUsers get(String username) {
         Example example = new Example(AspnetUsers.class);
-        example.createCriteria().andEqualTo("username",username);
+        example.createCriteria().andEqualTo("username",username).andEqualTo("applicationId","73663109-DDA2-4C2D-8311-337946B5C373");
         return aspnetUsersMapper.selectOneByExample(example);
     }
 
