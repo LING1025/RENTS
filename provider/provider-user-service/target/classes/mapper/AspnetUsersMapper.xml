@@ -14,14 +14,13 @@
     <result column="LastActivityDate" jdbcType="TIMESTAMP" property="lastActivityDate" />
     <result column="EXTN" jdbcType="VARCHAR" property="extn" />
     <result column="IsEas" jdbcType="INTEGER" property="isEas" />
-    <result column="EmpBase_Auto" jdbcType="INTEGER" property="empBaseAuto" />
     <result column="MDT" jdbcType="TIMESTAMP" property="mDT" />
     <result column="CDT" jdbcType="TIMESTAMP" property="cDT" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     UserId, ApplicationId, UserName, LoweredUserName, MobileAlias, IsAnonymous, LastActivityDate,
-    User_Auto, EXTN, IsEas,EmpBase_Auto,MDT,CDT
+    User_Auto, EXTN, IsEas,MDT,CDT
   </sql>
   <resultMap id="queryUserListDto" extends="BaseResultMap" type="com.funtl.myshop.plus.provider.domain.UserList">
     <id column="EmpBase_Auto" jdbcType="BIGINT" property="empBaseAuto" />
@@ -37,7 +36,7 @@
     eb.CDT,eb.FName,eb.EmpBase_Auto
     FROM
     aspnet_Users AS au
-    INNER JOIN EmpBase AS eb ON au.EmpBase_Auto = eb.EmpBase_Auto
+    INNER JOIN EmpBase AS eb ON au.UserName = eb.UserName
     INNER JOIN aspnet_Membership AS am ON au.UserId = am.UserId
     WHERE
     1 = 1

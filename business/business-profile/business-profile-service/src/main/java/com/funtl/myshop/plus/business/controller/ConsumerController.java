@@ -136,7 +136,7 @@ public class ConsumerController {
             throw new BusinessException(BusinessStatus.UPDATE_FAILURE);
         }
 
-        EmpBase empBase = empBaseService.selectById(aspnetUsers.getEmpBaseAuto());
+        EmpBase empBase = empBaseService.selectUsername(aspnetUsers.getUsername());
         empBase.setIsOn(usersParamDto.getIsOn());
         empBase.setMDT(new Date());
         Integer i1 = empBaseService.update(empBase);
