@@ -48,7 +48,7 @@
    <!-- ar.Roles_Auto,-->ar.RoleName,am.MobilePIN,am.Email
     FROM
     EmpBase AS eb
-    LEFT JOIN aspnet_Users AS au ON eb.EmpBase_Auto = au.EmpBase_Auto
+    LEFT JOIN aspnet_Users AS au ON eb.UserName = au.UserName
     LEFT JOIN aspnet_Membership AS am ON au.UserId = am.UserId
     LEFT JOIN Roles2Emp AS re ON eb.EmpBase_Auto = re.EmpBase_Auto
     LEFT JOIN aspnet_Roles AS ar ON re.Roles_Auto = ar.Roles_Auto

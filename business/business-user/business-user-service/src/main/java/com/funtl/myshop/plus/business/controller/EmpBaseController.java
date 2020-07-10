@@ -114,7 +114,6 @@ public class EmpBaseController {
         aspnetUsers.setUserId(UUID.randomUUID().toString());
         aspnetUsers.setApplicationId("73663109-DDA2-4C2D-8311-337946B5C373");
         aspnetUsers.setLoweredUserName(empParamDto.getUsername().toLowerCase());
-        aspnetUsers.setEmpBaseAuto(i2);
         aspnetUsers.setIsEas(1);
         Long i1 = aspnetUsersService.insert(aspnetUsers);
         if(i1 == 0){
@@ -249,7 +248,7 @@ public class EmpBaseController {
 
         //判断是否修改了部门
         if(!empBase.getOrgAuto().equals(empParamDto.getOrgAuto())){
-            AspnetUsers au = aspnetUsersService.selectByEmpAuto(empBase.getEmpBaseAuto());
+            AspnetUsers au = aspnetUsersService.get(empBase.getUsername());
             Org2Emp org2Emp = org2EmpService.selectByUserAuto(au.getUserAuto());
             org2Emp.setOrgAuto(org.getOrgAuto());
             Integer i2 = org2EmpService.update(org2Emp);
@@ -271,7 +270,7 @@ public class EmpBaseController {
             throw new BusinessException(BusinessStatus.UPDATE_FAILURE);
         }
 
-        AspnetUsers a = aspnetUsersService.selectByEmpAuto(empBase.getEmpBaseAuto());
+        AspnetUsers a = aspnetUsersService.get(empBase.getUsername());
         //删除用户角色绑定信息
         aspnetUsersInRolesService.deleteByUserId(a.getUserId());
 

@@ -58,12 +58,6 @@ public class AspnetUsers implements Serializable {
     private Integer isEas;
 
     /**
-     * 员工id
-     */
-    @Column(name = "EmpBase_Auto")
-    private Long empBaseAuto;
-
-    /**
      * 修改日期
      */
     @Column(name = "MDT")

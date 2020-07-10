@@ -63,12 +63,5 @@ public interface AspnetUsersService {
      * @return
      */
     AspnetUsers selectById(Long userAuto);
-
-    /**
-     * 根据员工id获取用户数据
-     * @param empBaseAuto
-     * @return
-     */
-    AspnetUsers selectByEmpAuto(Long empBaseAuto);
 }
 
