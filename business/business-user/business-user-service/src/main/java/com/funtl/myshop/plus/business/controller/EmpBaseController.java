@@ -115,6 +115,9 @@ public class EmpBaseController {
         aspnetUsers.setApplicationId("73663109-DDA2-4C2D-8311-337946B5C373");
         aspnetUsers.setLoweredUserName(empParamDto.getUsername().toLowerCase());
         aspnetUsers.setIsEas(1);
+        aspnetUsers.setIsAnonymous(false);
+        aspnetUsers.setExtn("");
+        aspnetUsers.setLastActivityDate(new Date());
         Long i1 = aspnetUsersService.insert(aspnetUsers);
         if(i1 == 0){
             empBaseService.deleteById(i2);
