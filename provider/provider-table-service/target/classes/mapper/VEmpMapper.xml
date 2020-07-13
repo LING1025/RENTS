@@ -210,7 +210,7 @@
     <result column="pMoney" jdbcType="INTEGER" property="pMoney" />
     <result column="Sales_Auto" jdbcType="BIGINT" property="salesAuto" />
   </resultMap>
-  <select id="selectTrail" resultMap="queryTrail">
+  <select id="selectTest" resultMap="queryTrail">
     declare @Amt decimal(16,2),@Mode int,@User_Auto int,@StartDT datetime,@EndDT datetime,@Org_auto int,@OrgUp int
     set @User_Auto = #{param.userAuto}
     set @StartDT = #{param.startDate}
@@ -290,101 +290,7 @@
 
     select convert(varchar(7),b.YJCDT,120) yearMon,day(b.YJCDT) days,count(*) pCount,sum(b.MM*b.MAmt) pMoney
     from @Org a
-    left join [order] b on b.YJOrg = a.Org_Auto and b.YJCDT between <!--DATEADD(mm, DATEDIFF(mm,0,@StartDT)-1, 0)-->@StartDT and @EndDT
-    group by convert(varchar(7),b.YJCDT,120),day(b.YJCDT)
-    order by  convert(varchar(7),b.YJCDT,120),day(b.YJCDT)
-
-    drop table #Roles
-  </select>
-
-  <resultMap id="queryLastMonth" extends="BaseResultMap" type="com.funtl.myshop.plus.provider.dto.LastMonthListDto">
-    <result column="yearMonLast" jdbcType="VARCHAR" property="yearMonLast" />
-    <result column="daysLast" jdbcType="VARCHAR" property="daysLast" />
-    <result column="pCountLast" jdbcType="INTEGER" property="pCountLast" />
-    <result column="pMoneyLast" jdbcType="INTEGER" property="pMoneyLast" />
-    <result column="Sales_Auto" jdbcType="BIGINT" property="salesAuto" />
-  </resultMap>
-  <select id="selectLastMonth" resultMap="queryLastMonth">
-    declare @Amt decimal(16,2),@Mode int,@User_Auto int,@StartDT datetime,@EndDT datetime,@Org_auto int,@OrgUp int
-    set @User_Auto = #{param.userAuto}
-    set @StartDT = #{param.startDate}
-    set @EndDT = #{param.endDate}
-    set @Org_auto =  #{param.orgAuto}
-    set @OrgUp =  #{param.orgUpAuto}
-    set @Mode =  0  -- 2部 1课  0业代
-
-    select @Amt = num from ItemCode where ItemType = (10000+year(@StartDT))
-
-    declare @Org table(
-    Org_Auto bigint
-    )
-
-    select c.Roles_Auto
-    into #Roles
-    from AspNet.dbo.aspnet_Users a
-    inner join AspNet.dbo.aspnet_UsersInRoles b on b.UserId = a.UserId
-    inner join AspNet.dbo.aspnet_Roles c on c.RoleId = b.RoleId and c.Roles_Auto in(16,12,22,83,7,3,11)
-    where a.User_Auto = @User_Auto
-
-    if @OrgUp + @Org_auto > 0
-    begin
-    if Exists (select * from #Roles where Roles_Auto in(3,11,7))
-    begin
-    set @User_Auto = 0
-    end
-    if @OrgUp > 0
-    begin
-    set @Mode = 1
-    insert into @Org(Org_Auto)
-    select distinct b.Org_Auto
-    from AspNet.dbo.Org2Emp a
-    left join AspNet.dbo.Org b on b.Org_Auto = a.Org_Auto
-    where (a.User_Auto = @User_Auto or @User_Auto= 0) and a.acltype = 0 and b.Lev = 5 and b.UpUnit = @OrgUp
-    end
-    else
-    begin
-    set @Mode = 0
-    insert into @Org(Org_Auto)
-    select distinct b.Org_Auto
-    from AspNet.dbo.Org2Emp a
-    left join AspNet.dbo.Org b on b.Org_Auto = a.Org_Auto
-    where (a.User_Auto = @User_Auto or @User_Auto= 0) and a.acltype = 0 and b.Lev = 5 and a.Org_auto = @Org_auto
-    end
-    end
-    else
-    begin
-    if Exists (select * from #Roles where Roles_Auto in(3,11,7))
-    begin
-    set @Mode = 2
-    insert into @Org(Org_Auto)
-    select distinct b.Org_Auto
-    from AspNet.dbo.Org a
-    left join AspNet.dbo.Org b on b.UpUnit = a.Org_Auto
-    where a.IsSalesDep = 1 and a.Lev = 4  <!--and a.iszf = 1 and (a.depname like '%华东%' or a.depname like '%华南%')-->
-    end
-    else if Exists (select * from #Roles where Roles_Auto in(12,22,83,7))
-    begin
-    set @Mode = 2
-    insert into @Org(Org_Auto)
-    select distinct b.Org_Auto
-    from AspNet.dbo.Org2Emp a
-    left join AspNet.dbo.Org b on b.Org_Auto = a.Org_Auto
-    where a.User_Auto = @User_Auto and a.acltype = 0 and b.Lev = 5 and b.IsSalesDep = 1 <!--and b.iszf = 1 and (b.depname like '%华东%' or b.depname like '%华南%')-->
-    end
-    else if Exists (select * from #Roles where Roles_Auto in(16))
-    begin
-    set @Mode = 1
-    insert into @Org(Org_Auto)
-    select distinct b.Org_Auto
-    from AspNet.dbo.Org2Emp a
-    left join AspNet.dbo.Org b on b.Org_Auto = a.Org_Auto
-    where a.User_Auto = @User_Auto and a.acltype = 0 and b.Lev = 5 and b.IsSalesDep = 1 <!--and b.iszf = 1 and (b.depname like '%华东%' or b.depname like '%华南%')-->
-    end
-    end
-
-    select convert(varchar(7),b.YJCDT,120) yearMonLast,day(b.YJCDT) daysLast,count(*) pCountLast,sum(b.MM*b.MAmt) pMoneyLast
-    from @Org a
-    left join [order] b on b.YJOrg = a.Org_Auto and b.YJCDT between DATEADD(mm, -1, @StartDT) and DATEADD(mm, -1, @EndDT)
+    left join [order] b on b.YJOrg = a.Org_Auto and b.YJCDT between DATEADD(mm, DATEDIFF(mm,0,@StartDT)-1, 0) and @EndDT
     group by convert(varchar(7),b.YJCDT,120),day(b.YJCDT)
     order by  convert(varchar(7),b.YJCDT,120),day(b.YJCDT)
 

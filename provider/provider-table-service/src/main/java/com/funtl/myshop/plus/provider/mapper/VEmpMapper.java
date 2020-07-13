@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface VEmpMapper extends MyMapper<VEmp> {
     List<ReportForms> selectMode(@Param("param") LineChartQueryParam lineChartQueryParam);
-    List<MonthListDto> selectTrail(@Param("param") LineChartQueryParam lineChartQueryParam);
 
-    List<LastMonthListDto> selectLastMonth(@Param("param") LineChartQueryParam lineChartQueryParam);
+    List<MonthListDto> selectTest(@Param("param") LineChartQueryParam lineChartQueryParam);
+
 }

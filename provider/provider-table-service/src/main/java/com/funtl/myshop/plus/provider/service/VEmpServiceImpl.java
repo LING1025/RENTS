@@ -26,12 +26,7 @@ public class VEmpServiceImpl implements VEmpService{
     }
 
     @Override
-    public List<MonthListDto> selectTrail(LineChartQueryParam lineChartQueryParam) {
-        return vEmpMapper.selectTrail(lineChartQueryParam);
-    }
-
-    @Override
-    public List<LastMonthListDto> selectLastMonth(LineChartQueryParam lineChartQueryParam) {
-        return vEmpMapper.selectLastMonth(lineChartQueryParam);
+    public List<MonthListDto> selectTest(LineChartQueryParam lineChartQueryParam) {
+        return vEmpMapper.selectTest(lineChartQueryParam);
     }
 }

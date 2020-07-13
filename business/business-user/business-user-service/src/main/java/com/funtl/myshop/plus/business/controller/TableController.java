@@ -94,22 +94,28 @@ public class TableController {
             return new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"提示：不允许跨年份或月份查询",null);
         }
         LineChartQueryParam lineChartQueryParam = new LineChartQueryParam(userAuto,startDate,endDate,orgAuto,orgUpAuto);
-        List<MonthListDto> monthListDtos = vEmpService.selectTrail(lineChartQueryParam);
+        List<MonthListDto> monthListDtos = vEmpService.selectTest(lineChartQueryParam);
         List<PCountMoneys> thisMonth = Lists.newArrayList();
+        List<PCountMoneyLast> lastMonth = Lists.newArrayList();
         for(MonthListDto monthListDto : monthListDtos){
+            //本月
             PCountMoneys pCountMoneys = new PCountMoneys();
             BeanUtils.copyProperties(monthListDto,pCountMoneys);
-            thisMonth.add(pCountMoneys);
-        }
-
-        List<LastMonthListDto> lastMonthListDtos = vEmpService.selectLastMonth(lineChartQueryParam);
-        List<PCountMoneyLast> lastMonth = Lists.newArrayList();
-        for(LastMonthListDto lastMonthListDto : lastMonthListDtos){
+            //上个月
             PCountMoneyLast pCountMoneyLast = new PCountMoneyLast();
-            BeanUtils.copyProperties(lastMonthListDto,pCountMoneyLast);
-            lastMonth.add(pCountMoneyLast);
-        }
+            BeanUtils.copyProperties(monthListDto,pCountMoneyLast);
+            pCountMoneyLast.setYearMonLast(monthListDto.getYearMon());
+            pCountMoneyLast.setDaysLast(monthListDto.getDays());
+            pCountMoneyLast.setPCountLast(monthListDto.getPCount());
+            pCountMoneyLast.setPMoneyLast(monthListDto.getPMoney());
 
+            if(monthListDto.getYearMon() == null || monthListDto.getYearMon().split("-")[1].equals(startMon)){
+                thisMonth.add(pCountMoneys);
+            }
+            if(monthListDto.getYearMon() == null || !monthListDto.getYearMon().split("-")[1].equals(startMon)){
+                lastMonth.add(pCountMoneyLast);
+            }
+        }
         YearMonthList yearMonthList = new YearMonthList();
         yearMonthList.setThisMonth(thisMonth);
         yearMonthList.setLastMonth(lastMonth);

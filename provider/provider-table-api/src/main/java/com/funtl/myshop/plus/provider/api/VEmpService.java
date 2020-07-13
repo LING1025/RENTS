@@ -15,14 +15,8 @@ public interface VEmpService{
      */
     List<ReportForms> selectMode(LineChartQueryParam lineChartQueryParam);
 
-    List<MonthListDto> selectTrail(LineChartQueryParam lineChartQueryParam);
+    List<MonthListDto> selectTest(LineChartQueryParam lineChartQueryParam);
 
-    /**
-     * 获取上个月营业报表
-     * @param lineChartQueryParam
-     * @return
-     */
-    List<LastMonthListDto> selectLastMonth(LineChartQueryParam lineChartQueryParam);
 
 
 }
