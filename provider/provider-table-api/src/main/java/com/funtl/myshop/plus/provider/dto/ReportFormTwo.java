@@ -1,16 +1,12 @@
-package com.funtl.myshop.plus.provider.domain;
+package com.funtl.myshop.plus.provider.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Data
-@ApiModel(value = "营业报表返回属性")
-public class ReportForms implements Serializable {
+public class ReportFormTwo implements Serializable {
     private Long salesAuto;
 
     private String fName;
@@ -74,4 +70,12 @@ public class ReportForms implements Serializable {
     @ApiModelProperty(value = "营业额达成率")
     private Double volumeLv;
 
+    @ApiModelProperty(value = "报件达成率")
+    private String pLv;
+
+    @ApiModelProperty(value = "台数达成率")
+    private String cLv;
+
+    @ApiModelProperty(value = "营业额达成率")
+    private String vLv;
 }

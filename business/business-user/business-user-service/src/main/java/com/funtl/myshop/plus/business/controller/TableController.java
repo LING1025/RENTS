@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,11 +56,11 @@ public class TableController {
             @ApiImplicitParam(name = "orgUpAuto", value = "上级部门id", required = false, dataType = "long", paramType = "path")
     })
     @GetMapping(value = "queryMode")
-    public ResponseResult<List<ReportForms>> queryMode(@RequestParam(name = "userAuto",required = false) Long userAuto,
-                                                       @RequestParam(name = "startDate",required = false) String startDate,
-                                                       @RequestParam(name = "endDate",required = false) String endDate,
-                                                       @RequestParam(name = "orgAuto",defaultValue = "0") Long orgAuto,
-                                                       @RequestParam(name = "orgUpAuto",defaultValue = "0") Long orgUpAuto){
+    public ResponseResult<List<ReportFormTwo>> queryMode(@RequestParam(name = "userAuto",required = false) Long userAuto,
+                                                          @RequestParam(name = "startDate",required = false) String startDate,
+                                                          @RequestParam(name = "endDate",required = false) String endDate,
+                                                          @RequestParam(name = "orgAuto",defaultValue = "0") Long orgAuto,
+                                                          @RequestParam(name = "orgUpAuto",defaultValue = "0") Long orgUpAuto){
         String startYear = startDate.split("-")[0];
         String endYear = endDate.split("-")[0];
         String startMon = startDate.split("-")[1];
@@ -69,7 +70,19 @@ public class TableController {
         }
         LineChartQueryParam lineChartQueryParam = new LineChartQueryParam(userAuto,startDate,endDate,orgAuto,orgUpAuto);
         List<ReportForms> list = vEmpService.selectMode(lineChartQueryParam);
-        return new ResponseResult<>(ResponseResult.CodeStatus.OK,"查询成功",list);
+        NumberFormat nt = NumberFormat.getPercentInstance();
+        // 设置百分数精确度2即保留两位小数
+        //nt.setMinimumFractionDigits(2);
+        List<ReportFormTwo> reportFormsList = Lists.newArrayList();
+        for(ReportForms reportForms : list){
+            ReportFormTwo rs = new ReportFormTwo();
+            BeanUtils.copyProperties(reportForms,rs);
+            rs.setPLv(nt.format(reportForms.getPaperLv()));
+            rs.setCLv(nt.format(reportForms.getCountLv()));
+            rs.setVLv(nt.format(reportForms.getVolumeLv()));
+            reportFormsList.add(rs);
+        }
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK,"查询成功",reportFormsList);
     }
 
     @ApiOperation(value = "获取试算营业报表信息")

@@ -46,9 +46,9 @@
     <result column="proPaperNum" jdbcType="INTEGER" property="proPaperNum" />
     <result column="targetVolume" jdbcType="INTEGER" property="targetVolume" />
     <result column="realVolume" jdbcType="INTEGER" property="realVolume" />
-    <result column="paperLv" jdbcType="INTEGER" property="paperLv" />
-    <result column="countLv" jdbcType="INTEGER" property="countLv" />
-    <result column="volumeLv" jdbcType="INTEGER" property="volumeLv" />
+    <result column="paperLv" jdbcType="DOUBLE" property="paperLv" />
+    <result column="countLv" jdbcType="DOUBLE" property="countLv" />
+    <result column="volumeLv" jdbcType="DOUBLE" property="volumeLv" />
   </resultMap>
   <select id="selectMode" resultMap="queryByMode">
     declare @Amt decimal(16,2),@Mode int,@User_Auto int,@StartDT datetime,@EndDT datetime,@Org_auto int,@OrgUp int
