@@ -197,6 +197,7 @@
     select convert(varchar(7),b.YJCDT,120) yearMon,day(b.YJCDT) days,count(*) pCount,sum(b.MM*b.MAmt) pMoney
     from @Org a
     left join [order] b on b.YJOrg = a.Org_Auto and b.YJCDT between DATEADD(mm, DATEDIFF(mm,0,@StartDT)-1, 0) and @EndDT
+    where b.YJCDT is not null
     group by convert(varchar(7),b.YJCDT,120),day(b.YJCDT)
     order by  convert(varchar(7),b.YJCDT,120),day(b.YJCDT)
 
@@ -291,6 +292,7 @@
     select convert(varchar(7),b.YJCDT,120) yearMon,day(b.YJCDT) days,count(*) pCount,sum(b.MM*b.MAmt) pMoney
     from @Org a
     left join [order] b on b.YJOrg = a.Org_Auto and b.YJCDT between DATEADD(mm, DATEDIFF(mm,0,@StartDT)-1, 0) and @EndDT
+    where b.YJCDT is not null
     group by convert(varchar(7),b.YJCDT,120),day(b.YJCDT)
     order by  convert(varchar(7),b.YJCDT,120),day(b.YJCDT)
 

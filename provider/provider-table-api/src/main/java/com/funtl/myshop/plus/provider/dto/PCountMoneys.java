@@ -19,9 +19,9 @@ public class PCountMoneys implements Serializable {
 
     @ApiModelProperty(value = "金额")
     private Integer pMoney;
-
+/*
     private Long orgAuto;
     private Long salesAuto;
 
-    private String fName;
+    private String fName;*/
 }
