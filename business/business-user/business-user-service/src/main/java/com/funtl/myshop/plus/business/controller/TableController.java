@@ -61,6 +61,9 @@ public class TableController {
                                                           @RequestParam(name = "endDate",required = false) String endDate,
                                                           @RequestParam(name = "orgAuto",defaultValue = "0") Long orgAuto,
                                                           @RequestParam(name = "orgUpAuto",defaultValue = "0") Long orgUpAuto){
+        if(startDate == null || endDate == null){
+            return new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"提示：查询日期不能为空",null);
+        }
         String startYear = startDate.split("-")[0];
         String endYear = endDate.split("-")[0];
         String startMon = startDate.split("-")[1];
@@ -99,6 +102,9 @@ public class TableController {
                                                          @RequestParam(name = "endDate",required = false) String endDate,
                                                          @RequestParam(name = "orgAuto",defaultValue = "0") Long orgAuto,
                                                          @RequestParam(name = "orgUpAuto",defaultValue = "0") Long orgUpAuto){
+        if(startDate == null || endDate == null){
+            return new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"提示：查询日期不能为空",null);
+        }
         String startYear = startDate.split("-")[0];
         String endYear = endDate.split("-")[0];
         String startMon = startDate.split("-")[1];
