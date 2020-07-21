@@ -58,7 +58,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/user/login","/user/changePwd");
+                .antMatchers("/user/login","/user/changePwd","/user/queryMode");
     }
 
     @Override
