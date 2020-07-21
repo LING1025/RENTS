@@ -5,7 +5,6 @@ import com.funtl.myshop.plus.business.BusinessStatus;
 import com.funtl.myshop.plus.business.dto.LoginInfo;
 import com.funtl.myshop.plus.business.dto.LoginParam;
 import com.funtl.myshop.plus.business.dto.ChangePwdParam;
-import com.funtl.myshop.plus.business.dto.UsersDto;
 import com.funtl.myshop.plus.business.feign.ConsumerFeign;
 import com.funtl.myshop.plus.commons.dto.ResponseResult;
 import com.funtl.myshop.plus.commons.utils.MapperUtils;
@@ -13,19 +12,14 @@ import com.funtl.myshop.plus.commons.utils.OkHttpClientUtil;
 import com.funtl.myshop.plus.provider.api.AspnetMembershipService;
 import com.funtl.myshop.plus.provider.api.AspnetRolesService;
 import com.funtl.myshop.plus.provider.api.AspnetUsersService;
-import com.funtl.myshop.plus.provider.api.VEmpService;
 import com.funtl.myshop.plus.provider.domain.AspnetMembership;
 import com.funtl.myshop.plus.provider.domain.AspnetRoles;
 import com.funtl.myshop.plus.provider.domain.AspnetUsers;
-import com.funtl.myshop.plus.provider.domain.ReportForms;
-import com.funtl.myshop.plus.provider.dto.LineChartQueryParam;
-import com.funtl.myshop.plus.provider.dto.ReportFormTwo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiOperation;
 import okhttp3.Response;
 import org.apache.dubbo.config.annotation.Reference;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,9 +32,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -82,9 +73,6 @@ public class LoginController {
 
     @Reference(version = "1.0.0")
     private AspnetRolesService aspnetRolesService;
-
-    @Reference(version = "1.0.0")
-    private VEmpService vEmpService;
 
     /**
      * 登录
@@ -190,44 +178,5 @@ public class LoginController {
             throw new BusinessException(BusinessStatus.UPDATE_FAILURE);
         }
         return new ResponseResult<Void>(ResponseResult.CodeStatus.OK, "修改密码成功");
-    }
-
-    @GetMapping(value = "/user/queryMode")
-    public ResponseResult<List<ReportFormTwo>> queryMode(@RequestParam(name = "userAuto",required = false) Long userAuto,
-                                                         @RequestParam(name = "startDate",required = false) String startDate,
-                                                         @RequestParam(name = "endDate",required = false) String endDate,
-                                                         @RequestParam(name = "orgAuto",defaultValue = "0") Long orgAuto,
-                                                         @RequestParam(name = "orgUpAuto",defaultValue = "0") Long orgUpAuto) throws ParseException {
-        if(startDate == null || endDate == null){
-            return new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"提示：查询日期不能为空",null);
-        }
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date1 = format.parse(startDate);
-        Date date2 = format.parse(endDate);
-        if(date1.after(date2)){
-            return new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"提示：开始日期必须小于结束日期",null);
-        }
-        String startYear = startDate.split("-")[0];
-        String endYear = endDate.split("-")[0];
-        String startMon = startDate.split("-")[1];
-        String endMon = endDate.split("-")[1];
-        if (!startYear.equals(endYear) || !startMon.equals(endMon)) {
-            return new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"提示：不允许跨年份或月份查询",null);
-        }
-        LineChartQueryParam lineChartQueryParam = new LineChartQueryParam(userAuto,startDate,endDate,orgAuto,orgUpAuto);
-        List<ReportForms> list = vEmpService.selectMode(lineChartQueryParam);
-        NumberFormat nt = NumberFormat.getPercentInstance();
-        // 设置百分数精确度2即保留两位小数
-        //nt.setMinimumFractionDigits(2);
-        List<ReportFormTwo> reportFormsList = Lists.newArrayList();
-        for(ReportForms reportForms : list){
-            ReportFormTwo rs = new ReportFormTwo();
-            BeanUtils.copyProperties(reportForms,rs);
-            rs.setPLv(nt.format(reportForms.getPaperLv()));
-            rs.setCLv(nt.format(reportForms.getCountLv()));
-            rs.setVLv(nt.format(reportForms.getVolumeLv()));
-            reportFormsList.add(rs);
-        }
-        return new ResponseResult<>(ResponseResult.CodeStatus.OK,"查询成功",reportFormsList);
     }
 }
