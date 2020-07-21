@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,9 +63,15 @@ public class TableController {
                                                           @RequestParam(name = "startDate",required = false) String startDate,
                                                           @RequestParam(name = "endDate",required = false) String endDate,
                                                           @RequestParam(name = "orgAuto",defaultValue = "0") Long orgAuto,
-                                                          @RequestParam(name = "orgUpAuto",defaultValue = "0") Long orgUpAuto){
+                                                          @RequestParam(name = "orgUpAuto",defaultValue = "0") Long orgUpAuto) throws ParseException {
         if(startDate == null || endDate == null){
             return new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"提示：查询日期不能为空",null);
+        }
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = format.parse(startDate);
+        Date date2 = format.parse(endDate);
+        if(date1.after(date2)){
+            return new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"提示：开始日期必须小于结束日期",null);
         }
         String startYear = startDate.split("-")[0];
         String endYear = endDate.split("-")[0];
@@ -101,9 +110,15 @@ public class TableController {
                                                          @RequestParam(name = "startDate",required = false) String startDate,
                                                          @RequestParam(name = "endDate",required = false) String endDate,
                                                          @RequestParam(name = "orgAuto",defaultValue = "0") Long orgAuto,
-                                                         @RequestParam(name = "orgUpAuto",defaultValue = "0") Long orgUpAuto){
+                                                         @RequestParam(name = "orgUpAuto",defaultValue = "0") Long orgUpAuto) throws ParseException {
         if(startDate == null || endDate == null){
             return new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"提示：查询日期不能为空",null);
+        }
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = format.parse(startDate);
+        Date date2 = format.parse(endDate);
+        if(date1.after(date2)){
+            return new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"提示：开始日期必须小于结束日期",null);
         }
         String startYear = startDate.split("-")[0];
         String endYear = endDate.split("-")[0];
