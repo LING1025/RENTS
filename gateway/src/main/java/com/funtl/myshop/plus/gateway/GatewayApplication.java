@@ -53,7 +53,9 @@ public class GatewayApplication {
             HttpMethod requestMethod = requestHeaders.getAccessControlRequestMethod();
             HttpHeaders headers = response.getHeaders();
             headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, requestHeaders.getOrigin());
-            headers.addAll(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, requestHeaders.getAccessControlRequestHeaders());
+//            headers.addAll(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, requestHeaders.getAccessControlRequestHeaders());
+            //解决列表中不存在请求标头的问题
+            headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "authorization,Authorization,DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type");
             if (requestMethod != null) {
                 headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, requestMethod.name());
             }
