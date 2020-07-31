@@ -5,13 +5,13 @@
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://192.168.168.208;database=Rental</jdbc-url>
+      <jdbc-url>jdbc:sqlserver://192.168.1.215;database=Rental</jdbc-url>
     </data-source>
     <data-source source="LOCAL" name="AspNet" uuid="ea3bbca8-bbec-45ff-80ce-aef12617b61d">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://192.168.168.208;database=AspNet</jdbc-url>
+      <jdbc-url>jdbc:sqlserver://192.168.1.215;database=AspNet</jdbc-url>
     </data-source>
   </component>
 </project>
