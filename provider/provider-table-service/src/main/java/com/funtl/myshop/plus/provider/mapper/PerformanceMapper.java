@@ -10,10 +10,4 @@ import tk.mybatis.mapper.MyMapper;
 import java.util.List;
 
 public interface PerformanceMapper extends MyMapper<Performance> {
-
-    ReportForms selectModeTwo(@Param("param") RptQueryParams rptQueryParams);
-
-    List<ReportForms> selectModeOnes(@Param("param") RptQueryParam rptQueryParam);
-
-    List<ReportForms> selectModeZeros(@Param("param") RptQueryParam rptQueryParam);
 }

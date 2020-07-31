@@ -32,8 +32,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "table")
 public class TableController {
-    @Reference(version = "1.0.0")
-    private PerformanceService performanceService;
 
     @Reference(version = "1.0.0")
     private Org2EmpService org2EmpService;

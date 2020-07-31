@@ -19,19 +19,4 @@ public class PerformanceServiceImpl implements PerformanceService{
     @Resource
     private PerformanceMapper performanceMapper;
 
-    @Override
-    public List<ReportForms> selectModeOnes(RptQueryParam rptQueryParam) {
-        return performanceMapper.selectModeOnes(rptQueryParam);
-
-    }
-
-    @Override
-    public List<ReportForms> selectModeZeros(RptQueryParam rptQueryParam) {
-        return performanceMapper.selectModeZeros(rptQueryParam);
-    }
-
-    @Override
-    public ReportForms selectModeTwo(RptQueryParams rptQueryParams) {
-        return performanceMapper.selectModeTwo(rptQueryParams);
-    }
 }
