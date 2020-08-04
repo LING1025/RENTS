@@ -41,7 +41,7 @@ dubbo:
     port: -1
     serialization: kryo
   provider:
-    timeout: 2500
+    timeout: 5000
 
 mybatis:
   type-aliases-package: com.funtl.myshop.plus.provider.domain
