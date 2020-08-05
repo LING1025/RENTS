@@ -165,6 +165,7 @@
     left join AspNet.dbo.Org f on f.Org_Auto = g.UpUnit
     group by case when @Mode = 1 then a4.Org_Auto else f.Org_Auto end,case when @Mode = 1 then a4.DepName else f.DepName end
     ) a3
+    order by orgName
 
     end
     else
