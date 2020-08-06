@@ -87,8 +87,14 @@ public class LoginController {
 
         // 验证密码是否正确
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginParam.getUsername());
-        if (userDetails == null || !passwordEncoder.matches(loginParam.getPassword(), userDetails.getPassword())) {
+        /*if (userDetails == null || !passwordEncoder.matches(loginParam.getPassword(), userDetails.getPassword())) {
             return new ResponseResult<Map<String, Object>>(ResponseResult.CodeStatus.ILLEGAL_REQUEST, "账号或密码错误", null);
+        }*/
+        if (userDetails == null) {
+            return new ResponseResult<Map<String, Object>>(ResponseResult.CodeStatus.ILLEGAL_REQUEST, "用户不存在", null);
+        }
+        if (userDetails != null && !passwordEncoder.matches(loginParam.getPassword(), userDetails.getPassword())) {
+            return new ResponseResult<Map<String, Object>>(ResponseResult.CodeStatus.ILLEGAL_REQUEST, "密码错误", null);
         }
 
         // 通过 HTTP 客户端请求登录接口

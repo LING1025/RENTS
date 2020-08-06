@@ -27,18 +27,20 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.168.208:8848
 
 dubbo:
   scan:
     base-packages: com.funtl.myshop.plus.business.controller
   registry:
-    address: nacos://127.0.0.1
+    address: nacos://192.168.168.208
     port: 8848
   protocol:
     name: dubbo
     port: -1
     serialization: kryo
+  provider:
+    timeout: 5000
 
 server:
   # ${random.int[9000,9999]} 随机端口
